@@ -10,75 +10,43 @@
     <p><a href="/">← web-playground</a></p>
     <h1>Japanese phonetic name autofill</h1>
     <p>
-      Chrome fills furigana (phonetic name) fields together with the kanji name. The standard
-      <code>autocomplete</code> tokens (<code>name</code>, <code>family-name</code>,
-      <code>given-name</code>) cover both, so Chrome tells the two apart by the field's
-      <code>name</code> attribute and its <code>&lt;label&gt;</code> text. This form follows the
-      naming from the
-      <a href="https://developer.chrome.com/blog/japanese-phonetic-name-autofill" rel="noopener"
+      Chrome fills furigana fields together with the kanji name when the form follows the
+      <a href="https://developer.chrome.com/blog/japanese-phonetic-name-autofill"
         >Chrome for Developers article</a
-      >.
+      >. This form does.
     </p>
-    <section>
-      <h2>How to try it</h2>
-      <ol>
-        <li>
-          <strong>Put a phonetic name into your Chrome profile.</strong> Open
-          <code>chrome://settings/addresses</code> (Settings → Autofill and passwords → Addresses
-          and more; 設定 → 自動入力とパスワード → 住所やその他の情報). Add an address or pick
-          <em>Edit</em> from the ⋮ menu of an existing one, set the country to Japan, fill 姓 / 名,
-          and fill the <em>Phonetic name</em> field (よみがな). Chrome shows it in hiragana; either
-          script works. Chrome also offers to save the phonetic name the first time you submit a
-          form where you typed one.
-        </li>
-        <li>
-          <strong>Fill the form.</strong> Click into 姓 and pick the suggestion. All four split
-          fields, or both full-name fields, should fill at once.
-        </li>
-        <li>
-          <strong>See how Chrome classified each field.</strong> Open DevTools, press
-          <kbd>Cmd</kbd>+<kbd>Shift</kbd>+<kbd>P</kbd> (or
-          <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>P</kbd>), run <em>Show Autofill</em> (also under
-          More tools → Autofill), then trigger the autofill again. The panel lists every field with
-          its predicted type; the furigana fields should read <em>Alternative family name</em>,
-          <em>Alternative given name</em> and <em>Alternative full name</em>. If you have no saved
-          address, the panel's <em>Show test address data in autofill menu</em> option lets you fill
-          with sample data, which does not include a phonetic name but still shows the
-          classification.
-        </li>
-      </ol>
-      <p>
-        References: the
-        <a href="https://developer.chrome.com/blog/japanese-phonetic-name-autofill" rel="noopener"
-          >Chrome for Developers article</a
-        >, the
-        <a href="https://blog.google/intl/ja-jp/feed/google-chrome-autofill-kana/" rel="noopener"
-          >Google Japan announcement</a
-        >, and the
-        <a href="https://developer.chrome.com/docs/devtools/autofill" rel="noopener"
-          >DevTools Autofill panel docs</a
-        >.
-      </p>
-    </section>
 
+    <h2>Before trying it</h2>
+    <p>
+      Chrome fills the furigana fields only from a profile that has a phonetic name. In
+      <code>chrome://settings/addresses</code>, add or edit an address, set the country to Japan,
+      and fill in <em>Phonetic name</em> (よみがな). Then click into 姓 and pick the suggestion.
+    </p>
+
+    <!--
+      The standard autocomplete tokens cover kanji and furigana alike, so Chrome tells
+      the two apart by the name attribute and the label text. The phonetic fields
+      therefore carry the article's name values verbatim and no autocomplete attribute;
+      katakana labels make Chrome fill katakana.
+    -->
     <form id="form">
       <fieldset>
         <legend>Split name</legend>
         <div class="row">
           <label for="family-name">姓</label>
-          <input id="family-name" name="family-name" type="text" autocomplete="family-name" />
+          <input id="family-name" name="family-name" autocomplete="family-name" />
         </div>
         <div class="row">
           <label for="given-name">名</label>
-          <input id="given-name" name="given-name" type="text" autocomplete="given-name" />
+          <input id="given-name" name="given-name" autocomplete="given-name" />
         </div>
         <div class="row">
           <label for="family-name-phonetic">セイ</label>
-          <input id="family-name-phonetic" name="family-name-phonetic" type="text" />
+          <input id="family-name-phonetic" name="family-name-phonetic" />
         </div>
         <div class="row">
           <label for="given-name-phonetic">メイ</label>
-          <input id="given-name-phonetic" name="given-name-phonetic" type="text" />
+          <input id="given-name-phonetic" name="given-name-phonetic" />
         </div>
       </fieldset>
 
@@ -86,11 +54,11 @@
         <legend>Full name</legend>
         <div class="row">
           <label for="full-name">氏名</label>
-          <input id="full-name" name="full-name" type="text" autocomplete="name" />
+          <input id="full-name" name="full-name" autocomplete="name" />
         </div>
         <div class="row">
           <label for="full-name-phonetic">セイメイ</label>
-          <input id="full-name-phonetic" name="full-name-phonetic" type="text" />
+          <input id="full-name-phonetic" name="full-name-phonetic" />
         </div>
       </fieldset>
 
@@ -98,7 +66,7 @@
       <button type="reset">Clear</button>
     </form>
 
-    <output id="result" for="form" aria-live="polite"></output>
+    <output id="result" form="form"></output>
 
     <script type="module" src="main.js"></script>
   </body>
