@@ -1,0 +1,32 @@
+# Everything runs in containers; the host needs Docker only. Use the Makefile
+# targets rather than calling these services directly.
+name: web-playground
+
+x-repo: &repo
+  volumes:
+    - ./:/repo
+    - pnpm-store:/pnpm/store
+  working_dir: /repo
+  # docker-init as PID 1 so Ctrl-C reaches dev servers and their children.
+  init: true
+
+services:
+  node:
+    <<: *repo
+    build: ./docker/node
+    ports:
+      - '${PORT:-5173}:5173'
+      - '${PREVIEW_PORT:-4173}:4173'
+    command: pnpm install
+
+  # `make test`: Playwright against the assembled dist/. Not started by anything else.
+  e2e:
+    <<: *repo
+    build: ./docker/e2e
+    profiles: [e2e]
+    environment:
+      CI: '1'
+    command: pnpm test
+
+volumes:
+  pnpm-store:

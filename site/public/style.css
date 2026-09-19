@@ -1,0 +1,93 @@
+:root {
+  color-scheme: light dark;
+  --fg: light-dark(#1b1b1b, #e6e6e6);
+  --muted: light-dark(#5f5f5f, #9a9a9a);
+  --bg: light-dark(#fbfbf9, #141414);
+  --line: light-dark(#e2e2dd, #2a2a2a);
+  --accent: light-dark(#0b5fff, #6ea0ff);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 2.5rem 1rem 4rem;
+  font:
+    16px/1.6 system-ui,
+    -apple-system,
+    'Segoe UI',
+    sans-serif;
+  color: var(--fg);
+  background: var(--bg);
+}
+
+header,
+main {
+  max-width: 44rem;
+  margin: 0 auto;
+}
+
+h1 {
+  margin: 0 0 0.5rem;
+  font-size: 1.75rem;
+  letter-spacing: -0.01em;
+}
+
+h2 {
+  margin: 0 0 0.25rem;
+  font-size: 1.125rem;
+}
+
+a {
+  color: var(--accent);
+}
+
+header p {
+  color: var(--muted);
+  margin: 0 0 2rem;
+}
+
+.experiments {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid var(--line);
+}
+
+.experiments li {
+  padding: 1.25rem 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.experiments li p {
+  margin: 0;
+}
+
+.meta {
+  margin-top: 0.5rem !important;
+  font-size: 0.875rem;
+  color: var(--muted);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 0.75rem;
+}
+
+.tag::before {
+  content: '#';
+}
+
+.badge {
+  font-size: 0.75rem;
+  font-weight: normal;
+  color: var(--muted);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 0 0.5rem;
+  vertical-align: middle;
+}
+
+.empty {
+  color: var(--muted);
+}

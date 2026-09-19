@@ -1,0 +1,29 @@
+{
+  "name": "web-playground",
+  "private": true,
+  "type": "module",
+  "description": "Small, independent experiments with web technologies, each published under its own path.",
+  "license": "MIT",
+  "packageManager": "pnpm@12.4.2",
+  "engines": {
+    "node": ">=24"
+  },
+  "scripts": {
+    "new": "node tools/new.ts",
+    "build": "pnpm --recursive --if-present run build && node tools/assemble.ts",
+    "preview": "node tools/serve.ts dist --port 4173",
+    "lint": "eslint . && prettier --check .",
+    "format": "prettier --write .",
+    "typecheck": "tsc -p . && pnpm --recursive --if-present run typecheck",
+    "test": "pnpm --filter e2e test"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@types/node": "^24.0.0",
+    "eslint": "^10.11.0",
+    "globals": "^17.12.0",
+    "prettier": "^3.9.8",
+    "typescript": "^6.0.0",
+    "typescript-eslint": "^8.70.0"
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "attribution": {
+    "commit": "",
+    "pr": "",
+    "sessionUrl": false
+  },
+  "permissions": {
+    "allow": [
+      "Bash(make help)",
+      "Bash(make build-image)",
+      "Bash(make install)",
+      "Bash(make new:*)",
+      "Bash(make build)",
+      "Bash(make lint)",
+      "Bash(make format)",
+      "Bash(make typecheck)",
+      "Bash(make test)",
+      "Bash(make check)",
+      "Bash(docker compose run --rm node:*)",
+      "Bash(docker compose run --rm e2e:*)",
+      "Bash(docker compose build:*)"
+    ]
+  }
+}

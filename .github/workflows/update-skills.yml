@@ -1,0 +1,20 @@
+# Keeps the skills under .claude/skills up to date, the way Dependabot keeps
+# action pins current. The reusable workflow runs `gh skill update --all` and
+# opens one pull request from the `update-skills` branch with whatever changed.
+#
+# `@main` on purpose: this repository follows the head of github-toolkit
+# instead of pinning a release.
+name: Update skills
+
+on:
+  schedule:
+    - cron: '0 0 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  update:
+    uses: yamat47/github-toolkit/.github/workflows/update-skills.yml@main

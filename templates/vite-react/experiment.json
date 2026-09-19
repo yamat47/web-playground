@@ -1,0 +1,6 @@
+{
+  "title": "__NAME__",
+  "description": "What this experiment tries out, in one sentence.",
+  "date": "__DATE__",
+  "tags": ["react"]
+}

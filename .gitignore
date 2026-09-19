@@ -1,0 +1,10 @@
+node_modules/
+dist/
+.DS_Store
+
+# Playwright output
+e2e/test-results/
+e2e/playwright-report/
+
+# Local overrides for the containers (ports, tokens); nothing in it is needed to run.
+/.env

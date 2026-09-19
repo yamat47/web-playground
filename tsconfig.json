@@ -1,0 +1,20 @@
+{
+  // Type-checks the scripts under tools/. Node runs them directly (type
+  // stripping), so the options are the ones that make that safe: erasable
+  // syntax only, .ts extensions in imports, no emit.
+  "compilerOptions": {
+    "target": "es2024",
+    "lib": ["es2024"],
+    "module": "nodenext",
+    "types": ["node"],
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "exactOptionalPropertyTypes": true,
+    "verbatimModuleSyntax": true,
+    "erasableSyntaxOnly": true,
+    "allowImportingTsExtensions": true,
+    "noEmit": true,
+    "skipLibCheck": true
+  },
+  "include": ["tools/**/*.ts", "eslint.config.js"]
+}

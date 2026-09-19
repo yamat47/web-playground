@@ -1,0 +1,58 @@
+# Publishes dist/ to https://playground.yamat47.me on every push to main:
+# build, sync to the S3 bucket, invalidate the CloudFront distribution.
+#
+# AWS access is OIDC (no stored keys): the role, created in infra-yamat47
+# (accounts/yamat47/aws), trusts only this repository's main branch and may
+# only write that bucket and invalidate that distribution. The three
+# identifiers live in the repository's Actions Variables:
+#   AWS_DEPLOY_ROLE_ARN, AWS_S3_BUCKET, AWS_CLOUDFRONT_DISTRIBUTION_ID
+#
+# `@main` on purpose: this repository follows the head of github-toolkit
+# instead of pinning a release.
+name: Deploy
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+# Deploys queue up instead of racing each other.
+concurrency:
+  group: deploy
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    name: Deploy to S3 + CloudFront
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    environment:
+      name: production
+      url: https://playground.yamat47.me
+    permissions:
+      contents: read
+      id-token: write # required to assume the AWS role via OIDC
+    steps:
+      - uses: yamat47/github-toolkit/actions/checkout@main
+      - uses: yamat47/github-toolkit/actions/setup-node-with-pnpm@main
+        with:
+          node-version-file: .node-version
+      - run: pnpm build
+
+      - uses: aws-actions/configure-aws-credentials@e1253824e5c10ff9df46874f81ed3ec929e19cfd # v6.3.0
+        with:
+          role-to-assume: ${{ vars.AWS_DEPLOY_ROLE_ARN }}
+          aws-region: ap-northeast-1
+
+      - name: Upload dist/ to S3
+        env:
+          BUCKET: ${{ vars.AWS_S3_BUCKET }}
+        run: aws s3 sync dist/ "s3://${BUCKET}/" --delete --no-progress
+
+      - name: Invalidate the CloudFront cache
+        env:
+          DISTRIBUTION_ID: ${{ vars.AWS_CLOUDFRONT_DISTRIBUTION_ID }}
+        run: aws cloudfront create-invalidation --distribution-id "$DISTRIBUTION_ID" --paths '/*'

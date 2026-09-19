@@ -1,0 +1,33 @@
+# Weekly, one grouped pull request per ecosystem.
+#   github-actions  the SHA-pinned actions in .github/workflows (the
+#                   github-toolkit references follow @main and are not bumped)
+#   npm             the pnpm workspace: root, e2e/, and every experiment
+#   docker          the base images in docker/*/Dockerfile (the Playwright
+#                   image must move together with @playwright/test in e2e/)
+version: 2
+updates:
+  - package-ecosystem: github-actions
+    directory: '/'
+    schedule:
+      interval: weekly
+    groups:
+      actions:
+        patterns: ['*']
+
+  - package-ecosystem: npm
+    directory: '/'
+    schedule:
+      interval: weekly
+    groups:
+      npm:
+        patterns: ['*']
+
+  - package-ecosystem: docker
+    directories:
+      - '/docker/node'
+      - '/docker/e2e'
+    schedule:
+      interval: weekly
+    groups:
+      docker:
+        patterns: ['*']

@@ -1,0 +1,6 @@
+# Every experiment is its own package; templates/ are copied, never installed.
+packages:
+  - experiments/*
+  - e2e
+minimumReleaseAgeExclude:
+  - eslint@10.11.0
