@@ -66,7 +66,7 @@ export function resolveUri(uri: string): { uri: string } | { redirect: string } 
   const segments = uri.split('/').filter(Boolean)
   const last = segments[segments.length - 1]
   if (last === undefined || last.includes('.')) return { uri }
-  if (segments.length === 1) return { redirect: `${uri}/` }
+  if (segments.length === 1) return { redirect: `/${segments[0]}/` }
   return { uri: `/${segments[0]}/index.html` }
 }
 
