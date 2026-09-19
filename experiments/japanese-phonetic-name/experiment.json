@@ -1,6 +1,6 @@
 {
   "title": "Japanese phonetic name autofill",
-  "description": "A form whose furigana fields Chrome fills together with the kanji name, following the field naming and labels the Chrome team describes.",
+  "description": "A form whose furigana fields Chrome fills together with the kanji name.",
   "date": "2026-09-19",
   "source": "https://developer.chrome.com/blog/japanese-phonetic-name-autofill",
   "tags": ["autofill", "forms", "chrome"]
