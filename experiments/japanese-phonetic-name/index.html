@@ -19,11 +19,47 @@
         >Chrome for Developers article</a
       >.
     </p>
-    <p>
-      To try it: have a Chrome profile with a Japanese address that includes a phonetic name, put
-      the cursor in 姓, and pick the suggestion. Open DevTools → Autofill to see how each field was
-      classified.
-    </p>
+    <section>
+      <h2>How to try it</h2>
+      <ol>
+        <li>
+          <strong>Put a phonetic name into your Chrome profile.</strong> Open
+          <code>chrome://settings/addresses</code> (Settings → Autofill and passwords → Addresses
+          and more; 設定 → 自動入力とパスワード → 住所やその他の情報). Add an address or pick
+          <em>Edit</em> from the ⋮ menu of an existing one, set the country to Japan, fill 姓 / 名,
+          and fill the <em>Phonetic name</em> field (よみがな). Chrome shows it in hiragana; either
+          script works. Chrome also offers to save the phonetic name the first time you submit a
+          form where you typed one.
+        </li>
+        <li>
+          <strong>Fill the form.</strong> Click into 姓 and pick the suggestion. All four split
+          fields, or both full-name fields, should fill at once.
+        </li>
+        <li>
+          <strong>See how Chrome classified each field.</strong> Open DevTools, press
+          <kbd>Cmd</kbd>+<kbd>Shift</kbd>+<kbd>P</kbd> (or
+          <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>P</kbd>), run <em>Show Autofill</em> (also under
+          More tools → Autofill), then trigger the autofill again. The panel lists every field with
+          its predicted type; the furigana fields should read <em>Alternative family name</em>,
+          <em>Alternative given name</em> and <em>Alternative full name</em>. If you have no saved
+          address, the panel's <em>Show test address data in autofill menu</em> option lets you fill
+          with sample data, which does not include a phonetic name but still shows the
+          classification.
+        </li>
+      </ol>
+      <p>
+        References: the
+        <a href="https://developer.chrome.com/blog/japanese-phonetic-name-autofill" rel="noopener"
+          >Chrome for Developers article</a
+        >, the
+        <a href="https://blog.google/intl/ja-jp/feed/google-chrome-autofill-kana/" rel="noopener"
+          >Google Japan announcement</a
+        >, and the
+        <a href="https://developer.chrome.com/docs/devtools/autofill" rel="noopener"
+          >DevTools Autofill panel docs</a
+        >.
+      </p>
+    </section>
 
     <form id="form">
       <fieldset>
