@@ -1,5 +1,5 @@
 // Static file server with the same URL rules as the CloudFront Function in
-// front of the S3 bucket (infra-yamat47, accounts/yamat47/aws):
+// front of the S3 bucket (infra-yamat47, accounts/yamat47/aws/functions):
 //
 //   /                      -> /index.html
 //   /name/                 -> /name/index.html
@@ -59,11 +59,12 @@ const MIME: Record<string, string> = {
   '.wasm': 'application/wasm',
 }
 
-// Mirrors the CloudFront Function. Returns the path to serve, or a redirect.
+// The CloudFront Function in infra-yamat47 (functions/web-playground-router.js)
+// is the same function line for line; change both.
 export function resolveUri(uri: string): { uri: string } | { redirect: string } {
   if (uri.endsWith('/')) return { uri: `${uri}index.html` }
   const segments = uri.split('/').filter(Boolean)
-  const last = segments.at(-1)
+  const last = segments[segments.length - 1]
   if (last === undefined || last.includes('.')) return { uri }
   if (segments.length === 1) return { redirect: `${uri}/` }
   return { uri: `/${segments[0]}/index.html` }
