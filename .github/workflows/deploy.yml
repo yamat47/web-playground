@@ -2,9 +2,10 @@
 # build, sync to the S3 bucket, invalidate the CloudFront distribution.
 #
 # AWS access is OIDC (no stored keys): the role, created in infra-yamat47
-# (accounts/yamat47/aws), trusts only this repository's main branch and may
-# only write that bucket and invalidate that distribution. The three
-# identifiers live in the repository's Actions Variables:
+# (accounts/yamat47/aws), trusts only pushes to this repository's main branch
+# and may only write that bucket and invalidate that distribution. No
+# `environment:` on the job: that would change the OIDC subject the role
+# trusts. The three identifiers live in the repository's Actions Variables:
 #   AWS_DEPLOY_ROLE_ARN, AWS_S3_BUCKET, AWS_CLOUDFRONT_DISTRIBUTION_ID
 #
 # `@main` on purpose: this repository follows the head of github-toolkit
@@ -29,9 +30,6 @@ jobs:
     name: Deploy to S3 + CloudFront
     runs-on: ubuntu-latest
     timeout-minutes: 15
-    environment:
-      name: production
-      url: https://playground.yamat47.me
     permissions:
       contents: read
       id-token: write # required to assume the AWS role via OIDC
