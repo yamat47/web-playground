@@ -3,9 +3,9 @@ description: House style for everything written around code, meaning code commen
 license: MIT
 metadata:
     github-path: skills/writing-conventions
-    github-ref: refs/tags/v1.5.0
+    github-ref: refs/tags/v1.6.0
     github-repo: https://github.com/yamat47/github-toolkit
-    github-tree-sha: 28a9af624595f08500abb958c1ad2c8745e10b29
+    github-tree-sha: 079f10b568f81f75972912de9e67f25ff8c0b32c
 name: writing-conventions
 ---
 # Writing conventions

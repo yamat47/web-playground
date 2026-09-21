@@ -3,14 +3,16 @@ description: Review a pull request, a branch, or the current diff the way a seni
 license: MIT
 metadata:
     github-path: skills/review-pr
-    github-ref: refs/tags/v1.5.0
+    github-ref: refs/tags/v1.6.0
     github-repo: https://github.com/yamat47/github-toolkit
-    github-tree-sha: 5048d14d6a3b825275effba4c3aa983681f982e5
+    github-tree-sha: 4a65dcd4ae4ef259d62f093d3244a8f4274cdfa2
 name: review-pr
 ---
 # Review a pull request
 
 This skill is the procedure. The knowledge about what is wrong in Rails code, a schema, or a comment lives in other skills and in the repository being reviewed; this skill decides what to read, in what order, how to check a finding before reporting it, and how to print the result. It never posts to GitHub. The caller decides what to do with the printed report.
+
+The report states what is verifiably wrong and what the PR should show. What the reviewer would say to the author, including the questions whose answer only the author has, is the job of `review-feedback`, which, when it is installed, runs this skill after its own reading of the diff and builds on the report. When the user asks for comments to post rather than a report, use that skill.
 
 ## Target
 
@@ -31,6 +33,8 @@ Run each `gh` and `git` command as its own Bash call so permission rules can mat
 2. Read the repository's own rules: `CLAUDE.md`, `AGENTS.md`, every file under `.claude/rules/` whose `paths` match a changed file, the PR template, and the linter configuration. These outrank everything this skill or the knowledge skills say. When the repository has decided against a toolkit rule, the toolkit rule is not a finding.
 3. List every changed file, including configuration, CI, generated files, and lock files. Classify each one with the routing table in [references/routing.md](references/routing.md) and load the knowledge skills it names, if they are installed. A file whose purpose cannot be explained from the diff is itself a finding.
 4. Read the surrounding code, not only the hunks: the callers of a changed method, the other consumers of a changed enum or endpoint, sibling files that solve the same problem. Most verified findings come from this step.
+
+When the caller (`review-feedback`) has already read the PR text and the rules and loaded the knowledge skills, do not read or load them again; start at item 4.
 
 ## Step 2: Judge the change as a whole
 
@@ -68,4 +72,4 @@ Say when someone else should look too: a change to a shared schema, a CI workflo
 
 ## Output
 
-Print the report in the fixed format described in [references/report-format.md](references/report-format.md). The headings never change, so other tools can read them; a section with nothing to say contains the single line "None." Write the findings in the language the repository uses for pull requests, following `writing-conventions` when it is installed. Findings are stated as facts with the fix; questions are stated as questions with options; no praise is mixed into a finding. When a knowledge skill the routing table asked for is not installed, the Verdict section says so, because the review then relied on general knowledge for that area.
+Print the report in the fixed format described in [references/report-format.md](references/report-format.md). The headings never change, so other tools can read them; a section with nothing to say contains the single line "None." When the caller asks for structured output instead (for example Claude Code's `--json-schema`), map the sections as [references/structured-output.md](references/structured-output.md) describes. Write the findings in the language the repository uses for pull requests, following `writing-conventions` when it is installed. Findings are stated as facts with the fix; questions are stated as questions with options; no praise is mixed into a finding. When a knowledge skill the routing table asked for is not installed, the Verdict section says so, because the review then relied on general knowledge for that area.
