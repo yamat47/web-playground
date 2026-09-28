@@ -3,9 +3,9 @@ description: Take the working tree from uncommitted changes to an open draft pul
 license: MIT
 metadata:
     github-path: skills/create-pr
-    github-ref: refs/tags/v1.5.0
+    github-ref: refs/tags/v1.6.1
     github-repo: https://github.com/yamat47/github-toolkit
-    github-tree-sha: 1b37d96d9547e27c0d1ac19b7af90e100ef5327f
+    github-tree-sha: 506318cebf89f1f2aac75ebefb46cb93cbd61b4b
 name: create-pr
 ---
 # Create a pull request
