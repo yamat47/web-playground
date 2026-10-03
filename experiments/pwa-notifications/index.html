@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#1e293b" />
+    <title>PWA notifications</title>
+    <link rel="manifest" href="manifest.json" />
+    <link rel="icon" href="icons/icon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="icons/apple-touch-icon.png" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <p><a href="/">← web-playground</a></p>
+    <h1>PWA notifications</h1>
+    <p>
+      An installable page for trying the options of
+      <a
+        href="https://developer.mozilla.org/en-US/docs/Web/API/ServiceWorkerRegistration/showNotification"
+        ><code>showNotification()</code></a
+      >. Nothing is pushed from a server: the page asks its service worker to show the notification,
+      which is the same call a <code>push</code> handler would make, so what appears is what a real
+      push would look like.
+    </p>
+
+    <section id="status">
+      <h2>Status</h2>
+      <dl>
+        <dt>Display mode</dt>
+        <dd id="status-display-mode">…</dd>
+        <dt>Service worker</dt>
+        <dd id="status-service-worker">…</dd>
+        <dt>Notification permission</dt>
+        <dd id="status-permission">…</dd>
+        <dt><code>Notification.maxActions</code></dt>
+        <dd id="status-max-actions">…</dd>
+        <dt>Badging API</dt>
+        <dd id="status-badging">…</dd>
+        <dt>Install prompt</dt>
+        <dd id="status-install">…</dd>
+      </dl>
+    </section>
+
+    <section id="install">
+      <h2>Install</h2>
+      <p>
+        <button type="button" id="install-button" disabled>Install</button>
+        <button type="button" id="check-update">Check for an update</button>
+        <button type="button" id="apply-update" hidden>Reload with the new version</button>
+      </p>
+      <p class="hint">
+        The Install button works where the browser fires
+        <code>beforeinstallprompt</code> (Chromium). Elsewhere use the browser's own menu: on iOS
+        and iPadOS, Share → Add to Home Screen; in Safari on macOS, File → Add to Dock. iOS and
+        iPadOS offer notifications only to the installed app, so install first and continue there.
+      </p>
+    </section>
+
+    <section id="playground">
+      <h2>Notification playground</h2>
+      <p>
+        <button type="button" id="request-permission">Request permission</button>
+        <span class="hint" id="permission-hint"></span>
+      </p>
+
+      <p id="presets">Presets:</p>
+
+      <form id="options">
+        <fieldset>
+          <legend>Text</legend>
+          <div class="row">
+            <label for="title">title</label>
+            <input id="title" name="title" value="Hello from the playground" />
+          </div>
+          <div class="row">
+            <label for="body">body</label>
+            <textarea id="body" name="body" rows="2"></textarea>
+          </div>
+          <div class="row">
+            <label for="dir">dir</label>
+            <select id="dir" name="dir">
+              <option>auto</option>
+              <option>ltr</option>
+              <option>rtl</option>
+            </select>
+          </div>
+          <div class="row">
+            <label for="lang">lang</label>
+            <input id="lang" name="lang" placeholder="BCP 47 tag, e.g. ja" />
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>Images</legend>
+          <label><input type="checkbox" name="icon" /> icon</label>
+          <label><input type="checkbox" name="badge" /> badge</label>
+          <label><input type="checkbox" name="image" /> image</label>
+        </fieldset>
+
+        <fieldset>
+          <legend>Behavior</legend>
+          <div class="row">
+            <label for="tag">tag</label>
+            <input id="tag" name="tag" placeholder="same tag replaces the earlier notification" />
+          </div>
+          <label><input type="checkbox" name="renotify" /> renotify</label>
+          <label><input type="checkbox" name="requireInteraction" /> requireInteraction</label>
+          <div class="row">
+            <label for="silent">silent</label>
+            <select id="silent" name="silent">
+              <option value="">(not set)</option>
+              <option>true</option>
+              <option>false</option>
+            </select>
+          </div>
+          <div class="row">
+            <label for="vibrate">vibrate</label>
+            <input id="vibrate" name="vibrate" placeholder="milliseconds, e.g. 200,100,200" />
+          </div>
+          <div class="row">
+            <label for="timestamp">timestamp</label>
+            <input
+              id="timestamp"
+              name="timestamp"
+              type="number"
+              placeholder="minutes from now, e.g. -60"
+            />
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>Actions</legend>
+          <div class="row">
+            <label for="action1">action 1</label>
+            <span class="pair">
+              <input id="action1" name="action1" placeholder="action" aria-label="action 1 id" />
+              <input name="action1Title" placeholder="title" aria-label="action 1 title" />
+            </span>
+          </div>
+          <div class="row">
+            <label for="action2">action 2</label>
+            <span class="pair">
+              <input id="action2" name="action2" placeholder="action" aria-label="action 2 id" />
+              <input name="action2Title" placeholder="title" aria-label="action 2 title" />
+            </span>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>On click</legend>
+          <div class="row">
+            <label for="navigate">navigate</label>
+            <input
+              id="navigate"
+              name="navigate"
+              placeholder="URL the browser opens by itself, without notificationclick"
+            />
+          </div>
+          <div class="row">
+            <label for="url">data.url</label>
+            <input
+              id="url"
+              name="url"
+              placeholder="URL the service worker opens; empty focuses this page"
+            />
+          </div>
+          <label
+            ><input type="checkbox" name="keepOpen" /> data.keepOpen (the service worker does not
+            call <code>close()</code>)</label
+          >
+        </fieldset>
+
+        <fieldset>
+          <legend>Sending</legend>
+          <div class="row">
+            <label for="delay">delay</label>
+            <input id="delay" name="delay" type="number" min="0" max="25" value="0" />
+          </div>
+          <p class="hint">
+            Seconds to wait before showing it, to leave time to switch tabs or lock the screen. The
+            service worker does the waiting.
+          </p>
+        </fieldset>
+
+        <button type="submit">Send</button>
+        <button type="reset">Reset</button>
+      </form>
+
+      <pre id="code" aria-label="The call the form makes"></pre>
+    </section>
+
+    <section id="active">
+      <h2>Active notifications</h2>
+      <p>
+        <button type="button" id="refresh-active">Refresh</button>
+        <button type="button" id="close-all">Close all</button>
+      </p>
+      <ul id="active-list"></ul>
+    </section>
+
+    <section id="badge">
+      <h2>App badge</h2>
+      <p>
+        <input id="badge-count" type="number" min="0" value="3" aria-label="Badge count" />
+        <button type="button" id="badge-set">Set count</button>
+        <button type="button" id="badge-flag">Set without a count</button>
+        <button type="button" id="badge-clear">Clear</button>
+      </p>
+      <p class="hint">The badge sits on the installed app's icon; a browser tab shows nothing.</p>
+    </section>
+
+    <section id="log">
+      <h2>Event log</h2>
+      <p><button type="button" id="clear-log">Clear</button></p>
+      <ol id="log-list"></ol>
+    </section>
+
+    <script type="module" src="main.js"></script>
+  </body>
+</html>

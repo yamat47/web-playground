@@ -1,0 +1,35 @@
+{
+  "name": "PWA Notifications",
+  "short_name": "Notifications",
+  "description": "Try the options of showNotification() and see how each platform renders them.",
+  "id": "/pwa-notifications/",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#1e293b",
+  "theme_color": "#1e293b",
+  "icons": [
+    { "src": "icons/icon.svg", "type": "image/svg+xml", "sizes": "any", "purpose": "any" },
+    { "src": "icons/icon-192.png", "type": "image/png", "sizes": "192x192", "purpose": "any" },
+    { "src": "icons/icon-512.png", "type": "image/png", "sizes": "512x512", "purpose": "any" },
+    {
+      "src": "icons/icon-maskable-192.png",
+      "type": "image/png",
+      "sizes": "192x192",
+      "purpose": "maskable"
+    },
+    {
+      "src": "icons/icon-maskable-512.png",
+      "type": "image/png",
+      "sizes": "512x512",
+      "purpose": "maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Send a notification",
+      "url": "./#playground",
+      "icons": [{ "src": "icons/icon-192.png", "type": "image/png", "sizes": "192x192" }]
+    }
+  ]
+}
