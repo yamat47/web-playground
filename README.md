@@ -109,7 +109,8 @@ The actions and the reusable workflow are referenced with `@main`. The skills un
 current by `.github/workflows/update-skills.yml`, which opens a pull request every Monday when a
 new release changes any of them. Installed: `create-pr`, `writing-conventions`, `review-pr`,
 `review-dependency-bump`, `grill-me`, `frontend-design`, `typescript-idioms`, `react-patterns`,
-`vue-patterns`, `github-actions-workflows`, `api-design`, `skill-creator`, `gh-stack`.
+`vue-patterns`, `github-actions-workflows`, `api-design`, `skill-creator`, `gh-stack`,
+`test-audit`.
 
 ## License
 

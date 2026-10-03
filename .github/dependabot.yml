@@ -21,6 +21,11 @@ updates:
     groups:
       npm:
         patterns: ['*']
+    # typescript-eslint does not support TypeScript 7 yet
+    # (typescript-eslint/typescript-eslint#10940). Remove when it does.
+    ignore:
+      - dependency-name: typescript
+        update-types: ['version-update:semver-major']
 
   - package-ecosystem: docker
     directories:
