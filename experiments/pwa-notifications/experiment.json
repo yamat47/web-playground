@@ -1,0 +1,7 @@
+{
+  "title": "PWA notifications",
+  "description": "An installable page that builds showNotification() calls from a form and logs what the service worker hears back.",
+  "date": "2026-10-03",
+  "source": "https://notifications.spec.whatwg.org/",
+  "tags": ["pwa", "notifications", "service-worker"]
+}
