@@ -1,6 +1,6 @@
 # Development image: Node and pnpm, nothing else. The repository is bind-mounted
 # at /repo by compose; dependencies are installed there by `make install`.
-ARG NODE_VERSION=24
+ARG NODE_VERSION=26
 FROM docker.io/library/node:${NODE_VERSION}-bookworm-slim
 
 ARG PNPM_VERSION=12.4.2
