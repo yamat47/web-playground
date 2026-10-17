@@ -1,7 +1,7 @@
 # Playwright image with pnpm added, for `make test`. The tag must match the
 # @playwright/test version in e2e/package.json, or the browsers do not match
 # the library; Dependabot bumps both, merge them together.
-FROM mcr.microsoft.com/playwright:v1.63.0-noble
+FROM mcr.microsoft.com/playwright:v1.64.1-noble
 
 ARG PNPM_VERSION=12.4.2
 
