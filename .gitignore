@@ -8,3 +8,6 @@ e2e/playwright-report/
 
 # Local overrides for the containers (ports, tokens); nothing in it is needed to run.
 /.env
+
+# create-pr keeps the PR body and screenshots under .tmp/pr/ before uploading them.
+/.tmp/
