@@ -51,7 +51,7 @@ typecheck: ## tsc for tools/ and every experiment that has a typecheck script
 	$(RUN) pnpm typecheck
 
 test: ## Playwright smoke tests against dist/ (run build first)
-	$(COMPOSE) run --rm e2e
+	$(COMPOSE) run --rm --build e2e
 
 check: lint typecheck build test ## Everything CI runs
 
